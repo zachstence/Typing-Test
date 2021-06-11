@@ -33,6 +33,7 @@
         // "Koran",
         // "direction",
     ];
+
     let token = "";
 
     let wordIndex = 0;
@@ -57,7 +58,7 @@
             letterIndex = 0;
             mistakeCount = 0;
             for (let i = 0; i < token.length; i++) {
-                if (word[i] && word[i] === token[i]) {
+                if (word[i] && word[i] === token[i] && !mistakeCount) {
                     letterIndex++;
                 } else {
                     mistakeCount++;
@@ -81,7 +82,6 @@
                 {:else}
                     <Word word={word} correct={0} mistake={0}  />
                 {/if}
-                <!-- <Word word={word} bind:correct={letterIndex} bind:mistake={mistakeCount} /> -->
             {/each}
         </div>
         <input bind:value={token} on:input={onInput} />
