@@ -1,32 +1,35 @@
 <script lang="ts">
     export let word: string;
-    export let correct: Boolean[];
+    export let correct: number;
+    export let mistake: number;
+
+    console.log(word, correct, mistake);
 
     function getClass(i) {
-        const c = correct[i];
-        if (c === null || c === undefined) return "";
-        else if (c) return "green";
-        else return "red";
+        console.log(`getClass(${i})`);
+        if (i < correct) return "correct";
+        else if (i < correct + mistake) return "mistake";
+        else return "";
     }
 </script>
+
+<span class="word">
+    {#each word as c, i}
+        <span class={i < correct ? "correct" : i < correct + mistake ? "mistake" : ""}>{c}</span>
+    {/each}
+</span>
 
 
 <style>
     .word {
         margin-right: 0.25em;
     }
-    .red {
-        color: red;
+
+    .correct {
+        background-color: limegreen;
     }
 
-    .green {
-        color: green;
+    .mistake {
+        background-color: red;
     }
 </style>
-
-
-<span class="word">
-{#each word as c, i}
-    <span class={getClass(i)}>{c}</span>
-    {/each}
-</span>
