@@ -1,21 +1,14 @@
 <script lang="ts">
-    export let word: string;
-    export let correct: number;
-    export let mistake: number;
+    import type WordInfo from "./WordInfo";
 
-    console.log(word, correct, mistake);
+    export let wordInfo: WordInfo;
 
-    function getClass(i) {
-        console.log(`getClass(${i})`);
-        if (i < correct) return "correct";
-        else if (i < correct + mistake) return "mistake";
-        else return "";
-    }
+    console.log(wordInfo.word, wordInfo.correctCount, wordInfo.mistakeCount);
 </script>
 
 <span class="word">
-    {#each word as c, i}
-        <span class={i < correct ? "correct" : i < correct + mistake ? "mistake" : ""}>{c}</span>
+    {#each wordInfo.word as c, i}
+        <span class={i < wordInfo.correctCount ? "correct" : i < wordInfo.correctCount + wordInfo.mistakeCount ? "mistake" : ""}>{c}</span>
     {/each}
 </span>
 
