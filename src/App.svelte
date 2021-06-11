@@ -45,14 +45,25 @@
 
     let wordIndex = 0;
 
+    let start: Date;
+    let wpm: number;
+
     function onInput(e) {
+        if (!start) start = new Date();
+
         const wordInfo = wordInfos[wordIndex];
+        if (!wordInfo) return;
 
         if (e.data === " ") {
             const typedWithoutSpace = typed.substr(0, typed.length - 1);
             if (typedWithoutSpace === wordInfo.word) {
                 wordIndex++;
                 typed = "";
+
+                // Recalculate WPM
+                const millis = (new Date().getTime() - start.getTime());
+                const minutes = millis / 60000;
+                wpm = (wordIndex + 1) / minutes
             }
             else wordInfo.mistakeCount++;
         } else {
@@ -77,12 +88,12 @@
 <main>
     <div class="wrapper">
         <div class="words">
-            {#each wordInfos as wordInfo}
+            {#each wordInfos as wordInfo (wordInfo.word)}
                 <Word {wordInfo} />
             {/each}
         </div>
         <input bind:value={typed} on:input={onInput} />
-        <p>Typed: {typed}</p>
+        <p>WPM: {wpm}</p>
     </div>
 </main>
 
