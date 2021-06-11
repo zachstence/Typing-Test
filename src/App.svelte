@@ -1,4 +1,6 @@
 <script lang="ts">
+import { select_multiple_value } from "svelte/internal";
+
     import Word from "./Word.svelte";
     import type WordInfo from "./WordInfo";
 
@@ -47,6 +49,7 @@
 
     let start: Date;
     let wpm: number;
+    let cpm: number;
 
     function onInput(e) {
         if (!start) start = new Date();
@@ -60,10 +63,12 @@
                 wordIndex++;
                 typed = "";
 
-                // Recalculate WPM
+                // Recalculate WPM/CPM
                 const millis = (new Date().getTime() - start.getTime());
                 const minutes = millis / 60000;
                 wpm = (wordIndex + 1) / minutes
+                const chars = wordInfos.reduce((sum, wi) => sum += wi.correctCount, 0);
+                cpm = chars / minutes;
             }
             else wordInfo.mistakeCount++;
         } else {
@@ -94,6 +99,7 @@
         </div>
         <input bind:value={typed} on:input={onInput} />
         <p>WPM: {wpm}</p>
+        <p>CPM: {cpm}</p>
     </div>
 </main>
 
