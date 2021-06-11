@@ -1,45 +1,15 @@
 <script lang="ts">
-import { select_multiple_value } from "svelte/internal";
-
     import Word from "./Word.svelte";
     import type WordInfo from "./WordInfo";
+    import random from "./random.json";
 
-    let words = [
-        "bother",
-        "elephant",
-        "panel",
-        "disability",
-        "inch",
-        "pyramid",
-        "separate",
-        "nationalism",
-        "live",
-        "rush",
-        "disappointment",
-        "salt",
-        "file",
-        "substitute",
-        "green",
-        "assignment",
-        "garage",
-        "horse",
-        "default",
-        "favorable",
-        "penetrate",
-        "version",
-        "velvet",
-        "allocation",
-        "pleasure",
-        "testify",
-        "touch",
-        "functional",
-        "Koran",
-        "direction",
-    ];
 
     let typed = "";
 
-    let wordInfos: WordInfo[] = words.map(w => ({
+    const NUM_WORDS = 30;
+    const subset = random.sort(() => 0.5 - Math.random()).slice(0, NUM_WORDS);
+
+    let wordInfos: WordInfo[] = subset.map(w => ({
         word: w,
         correctCount: 0,
         mistakeCount: 0
@@ -93,11 +63,11 @@ import { select_multiple_value } from "svelte/internal";
 <main>
     <div class="wrapper">
         <div class="words">
-            {#each wordInfos as wordInfo (wordInfo.word)}
+            {#each wordInfos as wordInfo}
                 <Word {wordInfo} />
             {/each}
         </div>
-        <input bind:value={typed} on:input={onInput} />
+        <input autofocus bind:value={typed} on:input={onInput} />
         <p>WPM: {wpm}</p>
         <p>CPM: {cpm}</p>
     </div>
