@@ -2,8 +2,6 @@
     import type WordInfo from "./WordInfo";
 
     export let wordInfo: WordInfo;
-
-    console.log(wordInfo.word, wordInfo.correctCount, wordInfo.mistakeCount);
 </script>
 
 <span class="word">

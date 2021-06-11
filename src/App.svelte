@@ -48,8 +48,8 @@ import { select_multiple_value } from "svelte/internal";
     let wordIndex = 0;
 
     let start: Date;
-    let wpm: number;
-    let cpm: number;
+    let wpm = 0;
+    let cpm = 0;
 
     function onInput(e) {
         if (!start) start = new Date();
